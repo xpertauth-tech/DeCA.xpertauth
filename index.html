@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manual DeCA interactivo — Guía práctica del Documento Electrónico de Control Administrativo en el transporte de mercancías por carretera.">
+  <title>Manual DeCA — Guía Práctica e Interactiva (5 de Octubre 2026)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="light">
+  <!-- Top Accessibility Bar / Deadline Banner -->
+  <aside class="top-banner" role="complementary" aria-label="Aviso de entrada en vigor">
+    <div class="banner-inner">
+      <span class="badge-pulse"></span>
+      <span class="banner-text">
+        <strong>Hito Clave:</strong> Obligatoriedad legal del <strong>DeCA digital</strong> desde el <strong>5 de octubre de 2026</strong> (Ley 9/2025).
+      </span>
+      <div id="countdown-wrapper" class="countdown-tag" title="Tiempo restante para la obligatoriedad total">
+        <span class="icon">⏱️</span>
+        <span id="countdown-timer">Cargando plazo...</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" id="app-sidebar" aria-label="Navegación principal">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <div class="logo-icon">🚛</div>
+          <div class="brand-info">
+            <h1>Manual DeCA</h1>
+            <span class="brand-sub">Guía Práctica Oficial 2026</span>
+          </div>
+        </div>
+        <button id="sidebar-close-btn" class="icon-btn mobile-only" aria-label="Cerrar navegación">✕</button>
+      </div>
+
+      <div class="sidebar-search-box">
+        <div class="input-with-icon">
+          <span class="input-icon">🔍</span>
+          <input type="search" id="global-search-input" placeholder="Buscar normas, multas, ADR..." autocomplete="off" aria-label="Buscar en el manual">
+          <button id="clear-search-btn" class="clear-search hidden" title="Limpiar búsqueda">✕</button>
+        </div>
+        <div class="search-hint">Pulsa <kbd>/</kbd> para buscar en cualquier momento</div>
+      </div>
+
+      <!-- Quick Nav Sections -->
+      <nav class="sidebar-nav">
+        <div class="nav-group-title">PANEL GENERAL</div>
+        <button class="nav-item active" data-view="dashboard">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Resumen & Métricas</span>
+        </button>
+        <button class="nav-item" data-view="wizard">
+          <span class="nav-icon">🧭</span>
+          <span class="nav-text">Asistente "¿Debo emitir?"</span>
+          <span class="item-badge new">Test</span>
+        </button>
+        <button class="nav-item" data-view="checklist">
+          <span class="nav-icon">📋</span>
+          <span class="nav-text">Checklist Requisitos</span>
+        </button>
+        <button class="nav-item" data-view="sanctions-calc">
+          <span class="nav-icon">⚖️</span>
+          <span class="nav-text">Simulador Sancionador</span>
+        </button>
+
+        <div class="nav-group-title">BLOQUES DEL MANUAL</div>
+        <div class="blocks-nav-list" id="blocks-nav-list">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <div class="nav-group-title">FUENTES Y MARCO</div>
+        <button class="nav-item" data-view="legal-sources">
+          <span class="nav-icon">📚</span>
+          <span class="nav-text">Textos Oficiales Citados</span>
+        </button>
+        <button class="nav-item" data-view="faq-notes">
+          <span class="nav-icon">💡</span>
+          <span class="nav-text">Criterios FAQ Ministerio</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="legal-disclaimer-box">
+          <span class="info-icon">ℹ️</span>
+          <p>Documento informativo consolidado a 5-oct-2026. No constituye asesoramiento jurídico formal.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <!-- Top Application Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button id="sidebar-toggle-btn" class="icon-btn" aria-label="Alternar menú lateral">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+          </button>
+          <div class="breadcrumbs" id="breadcrumbs">
+            <span class="crumb-root">Inicio</span>
+            <span class="crumb-separator">/</span>
+            <span class="crumb-current" id="current-crumb">Resumen & Métricas</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Category Quick Filter Dropdown -->
+          <div class="quick-filter-wrapper">
+            <label for="category-filter-select" class="sr-only">Filtrar por categoría</label>
+            <select id="category-filter-select" class="custom-select" aria-label="Filtrar por categoría">
+              <option value="all">Todas las categorías</option>
+              <option value="obligacion">Sujetos y Obligación</option>
+              <option value="datos">Datos y Contenido Art. 6</option>
+              <option value="tecnico">Requisitos Técnicos y Plazos</option>
+              <option value="firma">Firma Electrónica (eIDAS)</option>
+              <option value="operativa">Modificaciones y Agrupación</option>
+              <option value="formatos">Compatibilidad (ADR, eFTI)</option>
+              <option value="conservacion">Custodia y Repositorios</option>
+              <option value="sanciones">Sanciones y Régimen LOTT</option>
+            </select>
+          </div>
+
+          <!-- Quick Actions -->
+          <button id="favorites-toggle-btn" class="btn-secondary btn-sm" title="Ver artículos destacados / marcadores">
+            <span>⭐ Guardados</span>
+            <span id="favorites-count-badge" class="count-badge hidden">0</span>
+          </button>
+
+          <button id="theme-toggle-btn" class="icon-btn" title="Cambiar modo claro / oscuro" aria-label="Cambiar tema">
+            <span id="theme-icon">🌙</span>
+          </button>
+
+          <button id="print-view-btn" class="icon-btn" title="Imprimir o guardar como PDF" aria-label="Imprimir">
+            🖨️
+          </button>
+        </div>
+      </header>
+
+      <!-- Search Results Floating Bar (Active when searching) -->
+      <div id="search-feedback-bar" class="search-feedback-bar hidden">
+        <div class="search-feedback-info">
+          <span>Resultados para: <strong id="search-term-display">""</strong></span>
+          <span class="badge" id="search-count-badge">0 coincidencias</span>
+        </div>
+        <div class="search-feedback-actions">
+          <button id="clear-search-link" class="text-btn">Restablecer vista</button>
+        </div>
+      </div>
+
+      <!-- Dynamic Views Container -->
+      <main class="content-container" id="main-content-view">
+        <!-- Rendered dynamically by app.js depending on active view/tab -->
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal Container (for practical cases, full articles, and tools) -->
+  <div id="app-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title" class="modal-title">Título del Detalle</h3>
+        <button id="modal-close-btn" class="icon-btn modal-close" aria-label="Cerrar modal">✕</button>
+      </div>
+      <div id="modal-body" class="modal-body">
+        <!-- Injected via JS -->
+      </div>
+      <div class="modal-footer">
+        <button id="modal-copy-btn" class="btn-secondary">📋 Copiar texto normativo</button>
+        <button id="modal-action-close" class="btn-primary">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
