@@ -792,6 +792,9 @@ function setupGlobalEvents() {
       } else {
         routeView("dashboard");
       }
+      if (e.target.value !== "all") {
+        document.querySelector(".section-header")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     });
   }
 
