@@ -605,8 +605,8 @@ const DECA_DATA = {
               detalle: "Dependerá exclusivamente de que el instructor aprecie circunstancias atenuantes que justifiquen degradar la infracción de grave a leve, exigiendo expediente motivado."
             },
             {
-              titulo: "3. Criterio vinculante de las Juntas Arbitrales e Inspección",
-              detalle: "El criterio operativo en los primeros meses de aplicación práctica dependerá de las instrucciones de servicio que emita la Dirección General de Transporte Terrestre a los cuerpos de seguridad (Guardia Civil de Tráfico y policías autonómicas)."
+              titulo: "3. Criterio real de aplicación por la Inspección",
+              detalle: "No consta en los textos analizados cuál será el criterio operativo real de los servicios de Inspección."
             }
           ]
         }
